@@ -15,3 +15,4 @@ User Bundle
    reference/profile_edition
    reference/api
    reference/user_impersonation
+   reference/roles_matrix
