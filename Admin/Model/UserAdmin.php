@@ -17,6 +17,7 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Sonata\UserBundle\Form\Type\RolesMatrixType;
 
 class UserAdmin extends AbstractAdmin
 {
@@ -237,8 +238,8 @@ class UserAdmin extends AbstractAdmin
                     ))
                 ->end()
                 ->with('Roles')
-                    ->add('realRoles', $securityRolesType, array(
-                        'label' => 'form.label_roles',
+                    ->add('realRoles', RolesMatrixType::class, array(
+                        'label' => false,
                         'expanded' => true,
                         'multiple' => true,
                         'required' => false,
