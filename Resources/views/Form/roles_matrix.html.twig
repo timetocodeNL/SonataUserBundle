@@ -12,7 +12,7 @@ file that was distributed with this source code.
     <thead>
     <tr>
         <th></th>
-        {% for label in permission_labels|sort %}
+        {% for label in permission_labels %}
             <th> {{ label }} </th>
         {% endfor %}
     </tr>
@@ -21,18 +21,22 @@ file that was distributed with this source code.
     {% for admin_label, roles in grouped_roles %}
         <tr>
             <th>{{ admin_label }}</th>
-            {% for role, attributes in roles|sort %}
-                <td>
-                    {{ form_widget(attributes.form, { label: false }) }}
-                    {% if not attributes.is_granted %}
-                        <script>
-                            $('input[value="{{ role }}"]').iCheck('disable');
-                            $('form').on('submit', function() {
-                                $('input[value="{{ role }}"]').iCheck('enable');
-                            });
-                        </script>
-                    {% endif %}
-                </td>
+            {% for label in permission_labels %}
+                {% for role, attributes in roles if attributes.label == label %}
+                    <td>
+                        {{ form_widget(attributes.form, { label: false }) }}
+                        {% if not attributes.is_granted %}
+                            <script>
+                                $('input[value="{{ role }}"]').iCheck('disable');
+                                $('form').on('submit', function() {
+                                    $('input[value="{{ role }}"]').iCheck('enable');
+                                });
+                            </script>
+                        {% endif %}
+                    </td>
+                {% else %}
+                    <td></td>
+                {% endfor %}
             {% endfor %}
         </tr>
     {% endfor %}

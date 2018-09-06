@@ -16,7 +16,7 @@
             <argument type="service" id="sonata.user.admin_roles_builder"/>
             <argument type="service" id="sonata.user.security_roles_builder"/>
         </service>
-        <service id="sonata.user.admin_roles_builder" class="Sonata\UserBundle\Security\RolesBuilder\AdminRolesBuilder" public="false">
+        <service id="sonata.user.admin_roles_builder" class="Sonata\UserBundle\Security\RolesBuilder\GroupsAwareAdminRolesBuilder" public="false">
             <argument type="service" id="security.authorization_checker"/>
             <argument type="service" id="sonata.admin.pool"/>
             <argument type="service" id="translator"/>
