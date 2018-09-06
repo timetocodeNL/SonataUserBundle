@@ -13,7 +13,7 @@ file that was distributed with this source code.
     <tr>
         <th></th>
         {% for label in permission_labels %}
-            <th> {{ label }} </th>
+            <th style="text-align: center; width: 120px;"> {{ label }} </th>
         {% endfor %}
     </tr>
     </thead>
@@ -23,7 +23,7 @@ file that was distributed with this source code.
             <th>{{ admin_label }}</th>
             {% for label in permission_labels %}
                 {% for role, attributes in roles if attributes.label == label %}
-                    <td>
+                    <td style="text-align: center;">
                         {{ form_widget(attributes.form, { label: false }) }}
                         {% if not attributes.is_granted %}
                             <script>
