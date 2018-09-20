@@ -105,27 +105,34 @@ final class GroupsAwareAdminRolesBuilder implements AdminRolesBuilderInterface
                 // Get admin
                 $admin = $this->pool->getInstance($adminId);
 
-                // Add roles
-                $baseRole = $admin->getSecurityHandler()->getBaseRole($admin);
+                $admins = array_merge(
+                    [$admin],
+                    $admin->getChildren()
+                );
 
-                $keys = array_keys($admin->getSecurityInformation());
-                foreach ($keys as $key) {
-                    $role = sprintf($baseRole, $key);
+                foreach ($admins as $admin) {
+                    // Add roles
+                    $baseRole = $admin->getSecurityHandler()->getBaseRole($admin);
 
-                    $adminLabel = $admin->getLabel();
-                    $adminLabelDomain = $admin->getTranslationDomain();
+                    $keys = array_keys($admin->getSecurityInformation());
+                    foreach ($keys as $key) {
+                        $role = sprintf($baseRole, $key);
 
-                    $roles[$role] = [
-                        'role' => $role,
-                        'label' => $key,
-                        'role_translated' => $this->translateRole($role, $domain),
-                        'is_granted' => $this->isMaster($admin) || $this->authorizationChecker->isGranted($role),
-                        'admin_label' => sprintf(
-                            '%s: %s',
-                            $admin->getTranslator()->trans($adminGroupLabel, [], $adminGroupLabelDomain),
-                            $admin->getTranslator()->trans($adminLabel, [], $adminLabelDomain)
-                        ),
-                    ];
+                        $adminLabel = $admin->getLabel();
+                        $adminLabelDomain = $admin->getTranslationDomain();
+
+                        $roles[$role] = [
+                            'role' => $role,
+                            'label' => $key,
+                            'role_translated' => $this->translateRole($role, $domain),
+                            'is_granted' => $this->isMaster($admin) || $this->authorizationChecker->isGranted($role),
+                            'admin_label' => sprintf(
+                                '%s: %s',
+                                $admin->getTranslator()->trans($adminGroupLabel, [], $adminGroupLabelDomain),
+                                $admin->getTranslator()->trans($adminLabel, [], $adminLabelDomain)
+                            ),
+                        ];
+                    }
                 }
             }
         }
