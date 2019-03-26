@@ -98,7 +98,7 @@ final class GroupsAwareAdminRolesBuilder implements AdminRolesBuilderInterface
             foreach ($adminGroup['items'] as $item) {
                 // Get admin id
                 $adminId = $item['admin'];
-                if (in_array($adminId, $this->excludeAdmins)) {
+                if (!$adminId || in_array($adminId, $this->excludeAdmins)) {
                     continue;
                 }
 
